@@ -1,3 +1,13 @@
-## Data Science Project Template
+## Dataset Info
 
-You can use this template to structure your Python data science projects. It is based on [Cookie Cutter Data Science](https://drivendata.github.io/cookiecutter-data-science/).
+The dataset is not included in the repository due to its size.
+
+### Download
+
+Download the original dataset from: https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data
+
+### Setup
+
+Place the downloaded file in:
+
+data/raw/dataset.csv
