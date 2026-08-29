@@ -33,7 +33,7 @@ def save_cleaned_data(df: pd.DataFrame, output_path: str) -> None:
    
 
 def main():
-   raw_data_path ="data", "raw", "GlobalLandTemperaturesByCity.csv"
+   raw_data_path ="data", "raw", "GlobalLandTemperaturesByCountry.csv"
    interim_data_path = 'data/interim/hungary_temperatures_clean.csv'
 
    df_raw = load_data(os.path.join(*raw_data_path))
