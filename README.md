@@ -1,4 +1,4 @@
-# Data Science & Machine Learning Projects
+# 📊 Data Science & Machine Learning Projects
 
 A collection of data science projects, continuously updated with new analyses, experiments, and machine learning projects.
 
