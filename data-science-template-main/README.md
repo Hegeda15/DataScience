@@ -1,31 +1,30 @@
 # 🌡️ Hungary Temperature Trend & Time-Series Forecasting
 
-Egy end-to-end Python adattudományi és gépi tanulási projekt, amely Magyarország historikus havi átlaghőmérsékleti adatait elemzi, vizualizálja a szezonalitást és az éghajlati anomáliákat, valamint gépi tanulási regressziós modellekkel jósolja meg a következő hónap várható hőmérsékletét.
+An end-to-end Python data science and machine learning project that analyzes historical monthly average temperature data for Hungary, visualizes seasonality and climate anomalies, and uses machine learning regression models to predict the expected temperature for the coming month.
 
 ---
 
-## 📌 A Projekt Összefoglalása
+## 📌 Project Summary
 
-* **Domain:** Idősoros elemzés és predikció (Time-Series Forecasting)
-* **Adatforrás:** Magyarország havi átlaghőmérsékleti adatai (1901–2013)
-* **Cél:** Szezonális trendek feltárása, lag-jellemzők (Lag Features) építése és 1-lépéses előrejelzés (One-step-ahead forecasting) Scikit-Learn modellek segítségével.
-
+* **Domain:** Time-Series Forecasting
+* **Adatforrás:** Monthly Average Temperature Data for Hungary (1901–2013)
+* **Goal:** Identifying seasonal trends, building lag features, and performing one-step-ahead forecasting using Scikit-Learn models.
 ---
 
-## 📊 Fő Eredmények & Modell Teljesítmény
+## 📊 Key Results & Model Performance
 
-A modellek értékelése szigorú idősoros vágású (Time-Series Split, `shuffle=False`) tesztkészleten történt, elkerülve az adatszivárgást. A nem-lineáris összefüggéseket és a szezonalitást a Random Forest Regressor kezelte a legsikeresebben:
+The models were evaluated on a test set with a strict time-series split (`shuffle=False`) to avoid data leakage. The Random Forest Regressor handled nonlinear relationships and seasonality most successfully:
 
 | Modell | MAE (°C) | RMSE (°C) | R² Score |
 | :--- | :---: | :---: | :---: |
 | **Linear Regression** | 1.675 | 2.249 | 0.919 |
 | **Random Forest Regressor** | **1.515** | **2.068** | **0.931** |
 
-> 💡 **Fő megállapítás:** A lag-jellemzők (`temp_lag_1` és `temp_lag_12`) bevonása drasztikusan növelte a modell pontosságát, lehetővé téve, hogy a Random Forest a variancia több mint 93%-át megmagyarázza.
+> 💡 **Key finding:** Including the lag features (`temp_lag_1` and `temp_lag_12`) dramatically improved the model's accuracy, enabling the Random Forest to explain more than 93% of the variance.
 
 ---
 
-## 🛠️ Alkalmazott Technológiák
+## 🛠️ Technologies Used
 
 * **Nyelv:** Python 3.x
 * **Adatkezelés & EDA:** Pandas, NumPy
@@ -34,7 +33,7 @@ A modellek értékelése szigorú idősoros vágású (Time-Series Split, `shuff
 
 ---
 
-## 📂 Projekt Struktúra
+## 📂 Project Structure
 
 ```text
 ├── data/
@@ -50,20 +49,20 @@ A modellek értékelése szigorú idősoros vágású (Time-Series Split, `shuff
 ```
 
 ## ⚙️  Feature Engineering & Módszertan 
-   - Idősoros rendezés & Adattisztítás: Szigorú kronológiai sorrend biztosítása dátum alapján.
+   - Time Series Sorting & Data Cleaning: Ensuring strict chronological order based on date.
    - Lag Features:
-       - temp_lag_1: Az előző hónap tényleges hőmérséklete ($t-1$).
-         
-       - temp_lag_12: Az előző év azonos hónapjának hőmérséklete ($t-12$).Rolling Window:temp_roll_mean_3: Az elmúlt 3 hónap gördülő átlaga (kizárva a tárgyhót az adatszivárgás elkerülésére).
-         
-       - Szezonális kódolás: One-Hot Encoding az évszakokra (season_Spring, season_Summer, season_Winter).
+       - temp_lag_1: The actual temperature of the previous month ($t-1$).
 
-## ⚠️  Modell Architektúra & Korlátok (Model Limitations)Előrejelzési horizont (One-step-ahead Forecasting): 
-  - A modell felépítéséből adódóan 1 hónapos előrejelzésre ($t+1$) lett optimalizálva. Mivel a predikció erősen támaszkodik a lag-jellemzőkre, a modell csak akkor ad pontos becslést, ha rendelkezésre állnak a közvetlenül megelőző hónapok valós mérései.
-  
-  - Adatállomány időbeli terjedelme: A historikus adatsor 2013 szeptemberéig tartalmaz adatokat. Ennek következtében a modell jelenlegi formájában a 2013 utáni távoli időszakokra (pl. 2026/2027-re) nem alkalmazható közvetlenül valós input adatok hiányában.
-  
-  - Hosszú távú (Multi-step) jóslás korlátai: A rekurzív (lépésről lépésre történő) előrejelzés több évre előre nem javasolt ezzel az architektúrával, mert a bejósolt értékekből számolt lag-változók miatt a hiba eltolódik és felhalmozódik (Autoregressive Error Accumulation).
+       - temp_lag_12: The temperature of the same month in the previous year ($t-12$). Rolling Window: temp_roll_mean_3: The rolling average of the past 3 months (excluding the current month to avoid data leakage).
+
+       - Seasonal Encoding: One-Hot Encoding for seasons (season_Spring, season_Summer, season_Winter).
+
+## ⚠️  Model Architecture & Limitations (Model Limitations) Forecasting Horizon (One-step-ahead Forecasting):
+  - Due to the model’s structure, it has been optimized for a 1-month forecast ($t+1$). Since the prediction relies heavily on lag characteristics, the model provides accurate estimates only when actual measurements from the immediately preceding months are available.
+
+  - Temporal scope of the dataset: The historical data series contains data through September 2013. Consequently, in its current form, the model cannot be directly applied to periods far beyond 2013 (e.g., 2026/2027) due to the lack of actual input data.
+
+  - Limitations of long-term (multi-step) forecasting: Recursive (step-by-step) forecasting several years into the future is not recommended with this architecture because errors shift and accumulate (Autoregressive Error Accumulation) due to lag variables calculated from the forecasted values.
 
 ## Dataset Info
 
@@ -79,7 +78,7 @@ Place the downloaded file in:
 
 data/raw/dataset.csv
 
-## 🚀 Futtatás és Telepítés
+## 🚀 Run & installation
 
 ```code
 git clone [https://github.com/Hegeda15/hungary-temperature-ml.git](https://github.com/FELHASZNALONEV/hungary-temperature-ml.git)
