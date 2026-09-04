@@ -5,7 +5,7 @@ def load_interim_data(file_path: str) -> pd.DataFrame:
     print(f"Loading interim data from {file_path}")
     df = pd.read_csv(file_path)
     df['dt'] = pd.to_datetime(df['dt'])
-
+    df = df[df['year'] >= 1900].copy()
     return df.sort_values('dt').reset_index(drop=True)
 
 def ceate_lag_features(df: pd.DataFrame) -> pd.DataFrame:

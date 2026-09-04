@@ -21,7 +21,8 @@ def clean_temperature_data(df: pd.DataFrame) -> pd.DataFrame:
    df_clean['month'] = df_clean['dt'].dt.month
    df_clean['day'] = df_clean['dt'].dt.day
 
-   
+   df_clean = df_clean[df_clean['year'] >= 1900].copy()
+   df_clean = df_clean.sort_values('dt').reset_index(drop=True)
    return df_clean
 
 
